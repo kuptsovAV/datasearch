@@ -39,7 +39,7 @@ root.geometry("1600x400")
 
 # Создаем стили 
 light_style = ttk.Style()
-light_style.theme_use("clam")  
+light_style.theme_use("clam")
 
 
 # Метка и поле для ввода запроса
@@ -75,13 +75,16 @@ root.columnconfigure(0, weight=1)
 root.rowconfigure(1, weight=1)
 
 # Заголовки столбцов
-treeview.heading('Фамилия', text='Фамилия')
-treeview.heading('ИНН', text='ИНН')
+treeview.heading('Фамилия', text='Фамилия', anchor='center')
+treeview.heading('ИНН', text='ИНН', anchor='center')
 treeview.heading('Дата рождения', text='Дата рождения')
 treeview.heading('Телефон', text='Телефон')
 treeview.heading('Паспорт', text='Паспорт')
 treeview.heading('СНИЛС', text='СНИЛС')
 treeview.heading('Город', text='Город')
 
+# Выравниваем текст в заголовках по центру
+for col in ('ИНН', 'Дата рождения', 'Телефон', 'Паспорт', 'СНИЛС', 'Город'):
+    treeview.column(col, anchor='center')
 
 root.mainloop()
