@@ -7,7 +7,7 @@ def clear_entry():
     for item in treeview.get_children():
         treeview.delete(item)
 
-def search_contacts():
+def search_contacts(event=None):  # Параметр event=None позволяет вызывать функцию как по нажатию Enter, так и через кнопку
     search_type = search_type_var.get()
     search_text = entry_var.get()
     clear_entry()
@@ -31,16 +31,13 @@ def search_contacts():
         ]
         treeview.insert('', 'end', values=contact_values)
 
-
 root = Tk()
 root.title("СПД(Система поиска данных)")
 root.geometry("1600x400")
 
-
 # Создаем стили 
 light_style = ttk.Style()
 light_style.theme_use("clam")
-
 
 # Метка и поле для ввода запроса
 label = Label(root, text="Запрос:")
@@ -70,10 +67,6 @@ btn_clear.grid(row=0, column=5, padx=6, pady=6)
 treeview = ttk.Treeview(root, columns=('Фамилия', 'ИНН', 'Дата рождения', 'Телефон', 'Паспорт', 'СНИЛС', 'Город'), show='headings')
 treeview.grid(row=1, column=0, columnspan=6, padx=6, pady=6, sticky='nsew')
 
-# Добавляем возможность изменения размеров окна
-root.columnconfigure(0, weight=1)
-root.rowconfigure(1, weight=1)
-
 # Заголовки столбцов
 treeview.heading('Фамилия', text='Фамилия', anchor='center')
 treeview.heading('ИНН', text='ИНН', anchor='center')
@@ -86,5 +79,15 @@ treeview.heading('Город', text='Город')
 # Выравниваем текст в заголовках по центру
 for col in ('ИНН', 'Дата рождения', 'Телефон', 'Паспорт', 'СНИЛС', 'Город'):
     treeview.column(col, anchor='center')
+
+# Привязываем функцию search_contacts к событию нажатия Enter в поле ввода
+entry.bind('<Return>', search_contacts)
+
+# Создаем стиль для разделительных линий
+treeview.tag_configure('line', background='gray')  
+
+# Добавляем возможность изменения размеров окна
+root.columnconfigure(0, weight=1)
+root.rowconfigure(1, weight=1)
 
 root.mainloop()
