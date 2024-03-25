@@ -20,28 +20,35 @@ def search_contacts():
         results = search_contacts_by_passport(search_text)
 
     for contact in results:
-        treeview.insert('', 'end', values=(
-            contact.fullname,
-            contact.inn,
-            contact.birthdate,
-            contact.phonenum,
-            contact.passp,
-            contact.snils,
-            contact.city
-            
-        ))
+        contact_values = [
+            getattr(contact, 'fullname', ''),
+            getattr(contact, 'inn', ''),
+            getattr(contact, 'birthdate', ''),
+            getattr(contact, 'phonenum', ''),
+            getattr(contact, 'passp', ''),
+            getattr(contact, 'snils', ''),
+            getattr(contact, 'city', '')
+        ]
+        treeview.insert('', 'end', values=contact_values)
+
 
 root = Tk()
 root.title("СПД(Система поиска данных)")
 root.geometry("1600x400")
 
+
+# Создаем стили 
+light_style = ttk.Style()
+light_style.theme_use("clam")  
+
+
 # Метка и поле для ввода запроса
 label = Label(root, text="Запрос:")
-label.grid(row=0, column=0, padx=6, pady=6, sticky='w')
+label.grid(row=0, column=0, padx=6, pady=6, sticky='e')
 
 entry_var = StringVar()
-entry = Entry(root, textvariable=entry_var)
-entry.grid(row=0, column=1, padx=6, pady=6)
+entry = Entry(root, textvariable=entry_var, width=100)  
+entry.grid(row=0, column=1, padx=6, pady=6, sticky='w')  
 
 # Выбор типа поиска
 search_type_var = StringVar()
