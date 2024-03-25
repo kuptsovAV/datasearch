@@ -33,7 +33,7 @@ def search_contacts():
 
 root = Tk()
 root.title("СПД(Система поиска данных)")
-root.geometry("800x400")
+root.geometry("1600x400")
 
 # Метка и поле для ввода запроса
 label = Label(root, text="Запрос:")
@@ -61,7 +61,11 @@ btn_clear.grid(row=0, column=5, padx=6, pady=6)
 
 # Создаем Treeview
 treeview = ttk.Treeview(root, columns=('Фамилия', 'ИНН', 'Дата рождения', 'Телефон', 'Паспорт', 'СНИЛС', 'Город'), show='headings')
-treeview.grid(row=1, column=0, columnspan=6, padx=6, pady=6)
+treeview.grid(row=1, column=0, columnspan=6, padx=6, pady=6, sticky='nsew')
+
+# Добавляем возможность изменения размеров окна
+root.columnconfigure(0, weight=1)
+root.rowconfigure(1, weight=1)
 
 # Заголовки столбцов
 treeview.heading('Фамилия', text='Фамилия')
