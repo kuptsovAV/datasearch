@@ -7,7 +7,7 @@ def clear_entry():
     for item in treeview.get_children():
         treeview.delete(item)
 
-def search_contacts(event=None):  # Параметр event=None позволяет вызывать функцию как по нажатию Enter, так и через кнопку
+def search_contacts(event=None):  # Вызывать функцию как по нажатию Enter, так и через кнопку
     search_type = search_type_var.get()
     search_text = entry_var.get()
     clear_entry()

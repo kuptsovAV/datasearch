@@ -1,6 +1,40 @@
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, DateTime
 from sqlalchemy.orm import sessionmaker
-from sqlalchemy.orm import declarative_base
+from sqlalchemy.ext.declarative import declarative_base
+from datetime import datetime
+
+Base = declarative_base()
+
+class SearchLog(Base):
+    __tablename__ = 'search_logs'
+
+    id = Column(Integer, primary_key=True)
+    search_text = Column(String)
+    search_type = Column(String)
+    search_timestamp = Column(DateTime, default=datetime.utcnow)
+
+def search_contacts_by_surname(fullname):
+    log_search_query(fullname, "По фамилии")
+    # код для поиска по фамилии
+
+def search_contacts_by_phone(phone):
+    log_search_query(phone, "По телефону")
+    # код для поиска по телефону
+
+def search_contacts_by_passport(passport):
+    log_search_query(passport, "По паспорту")
+    # код для поиска по паспорту
+
+def log_search_query(search_text, search_type):
+    engine = create_engine("mssql+pyodbc:///?odbc_connect=DRIVER={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-RCOTVQJ;DATABASE=contacts;UID=cont;PWD=contact")
+    Base.metadata.create_all(engine)
+    Session = sessionmaker(bind=engine)
+    session = Session()
+    
+    log_entry = SearchLog(search_text=search_text, search_type=search_type)
+    session.add(log_entry)
+    session.commit()
+    session.close()
 
 def search_contacts_by_surname(fullname):
     engine = create_engine("mssql+pyodbc:///?odbc_connect=DRIVER={ODBC Driver 17 for SQL Server};SERVER=DESKTOP-RCOTVQJ;DATABASE=contacts;UID=cont;PWD=contact")
